@@ -2,6 +2,7 @@ package com.iagobc.cursoSpringBoot.controllers;
 
 import com.iagobc.cursoSpringBoot.domain.Customer;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -23,5 +24,17 @@ public class CustomerController {
     public List<Customer> getCustomers () {
 
         return customers;
+    }
+
+    @GetMapping ("/customers/{username}")
+    public Customer getSingleCustomer (@PathVariable String username) {
+        for (Customer customer : customers) {
+            if (customer.getUserName().equalsIgnoreCase(username)) {
+                return customer;
+            }
+        }
+
+        // Here we should return an exception 404
+        return null;
     }
 }
