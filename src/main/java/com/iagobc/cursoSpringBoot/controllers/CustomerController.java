@@ -18,11 +18,13 @@ public class CustomerController {
             new Customer(4, "Jesus Largo", "Jeguel", "9876")
     ));
 
+
     @GetMapping ("/customers")
     public List<Customer> getCustomers () {
 
         return customers;
     }
+
 
     @GetMapping ("/customers/{username}")
     public Customer getSingleCustomer (@PathVariable String username) {
@@ -36,9 +38,27 @@ public class CustomerController {
         return null;
     }
 
+
     @PostMapping ("/customers")
     public Customer newCustomer (@RequestBody Customer customer) {
         customers.add(customer);
         return customer;
+    }
+
+
+    @PutMapping ("/customers")
+    public Customer updateCustomer (@RequestBody Customer customer) {
+        for (Customer client : customers) {
+            if (customer.getId() == client.getId()) {
+                client.setName(customer.getName());
+                client.setUserName(customer.getUserName());
+                client.setPassword(customer.getPassword());
+
+                return client;
+            }
+        }
+
+        // It should be a exception, not a null
+        return null;
     }
 }
