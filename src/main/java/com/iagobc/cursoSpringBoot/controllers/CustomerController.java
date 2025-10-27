@@ -1,9 +1,7 @@
 package com.iagobc.cursoSpringBoot.controllers;
 
 import com.iagobc.cursoSpringBoot.domain.Customer;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,5 +34,11 @@ public class CustomerController {
 
         // Here we should return an exception 404
         return null;
+    }
+
+    @PostMapping ("/customers")
+    public Customer newCustomer (@RequestBody Customer customer) {
+        customers.add(customer);
+        return customer;
     }
 }
