@@ -74,4 +74,30 @@ public class CustomerController {
 
         return customers;
     }
+
+
+    @PatchMapping ("/customers")
+    public Customer patchCustomer (@RequestBody Customer customer) {
+        for (Customer client : customers) {
+            if (client.getId() == customer.getId()) {
+
+                if (customer.getName() != null) {
+                    client.setName(customer.getName());
+                }
+
+                if (customer.getUserName() != null) {
+                    client.setUserName(customer.getUserName());
+                }
+
+                if (customer.getPassword() != null) {
+                    client.setPassword(customer.getPassword());
+                }
+
+                return client;
+            }
+        }
+
+        // It should be a exception, not a null
+        return null;
+    }
 }
