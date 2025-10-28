@@ -61,4 +61,17 @@ public class CustomerController {
         // It should be a exception, not a null
         return null;
     }
+
+
+    @DeleteMapping ("/customers/{id}")
+    public List<Customer> deleteCustomer (@PathVariable int id) {
+        for (Customer customer : customers) {
+            if (customer.getId() == id) {
+                customers.remove(customer);
+                break;
+            }
+        }
+
+        return customers;
+    }
 }
