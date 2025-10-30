@@ -1,10 +1,13 @@
 package com.iagobc.cursoSpringBoot.controllers;
 
 import com.iagobc.cursoSpringBoot.domain.Customer;
+import jakarta.servlet.Servlet;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,8 +51,14 @@ public class CustomerController {
     public ResponseEntity<?> newCustomer (@RequestBody Customer customer) {
         customers.add(customer);
 
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{username}")
+                .buildAndExpand(customer.getUserName())
+                .toUri();
+
         // Response 201
-        return ResponseEntity.status(HttpStatus.CREATED).body("Customer " + customer.getName() + " was created.");
+        return ResponseEntity.created(location).body("Customer " + customer.getName() + " was created.");
     }
 
 
