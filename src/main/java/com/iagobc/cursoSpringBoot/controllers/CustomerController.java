@@ -1,6 +1,8 @@
 package com.iagobc.cursoSpringBoot.controllers;
 
 import com.iagobc.cursoSpringBoot.domain.Customer;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -20,67 +22,72 @@ public class CustomerController {
     ));
 
 
-    @RequestMapping (method = RequestMethod.GET)
-//    @GetMapping
-    public List<Customer> getCustomers () {
+//    @RequestMapping (method = RequestMethod.GET)
+    @GetMapping
+    public ResponseEntity<List<Customer>> getCustomers () {
 
-        return customers;
+        return ResponseEntity.ok(customers);
     }
 
 
-    @RequestMapping (value = "/{username}", method = RequestMethod.GET)
-//    @GetMapping ("/{username}")
-    public Customer getSingleCustomer (@PathVariable String username) {
+//    @RequestMapping (value = "/{username}", method = RequestMethod.GET)
+    @GetMapping ("/{username}")
+    public ResponseEntity<?> getSingleCustomer (@PathVariable String username) {
         for (Customer customer : customers) {
             if (customer.getUserName().equalsIgnoreCase(username)) {
-                return customer;
+                return ResponseEntity.ok(customer);
             }
         }
 
-        // Here we should return an exception 404
-        return null;
+        // Response 404
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The customer with username " + username + " doesn't exist.");
     }
 
 
     @PostMapping
-    public Customer newCustomer (@RequestBody Customer customer) {
+    public ResponseEntity<?> newCustomer (@RequestBody Customer customer) {
         customers.add(customer);
-        return customer;
+
+        // Response 201
+        return ResponseEntity.status(HttpStatus.CREATED).body("Customer " + customer.getName() + " was created.");
     }
 
 
     @PutMapping
-    public Customer updateCustomer (@RequestBody Customer customer) {
+    public ResponseEntity<?> updateCustomer (@RequestBody Customer customer) {
         for (Customer client : customers) {
             if (customer.getId() == client.getId()) {
                 client.setName(customer.getName());
                 client.setUserName(customer.getUserName());
                 client.setPassword(customer.getPassword());
 
-                return client;
+                return ResponseEntity.ok("The customer with ID " + customer.getId() + " was updated.");
             }
         }
 
-        // It should be a exception, not a null
-        return null;
+        // Response 404
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The customer with ID " + customer.getId() + " doesn't exist.");
     }
 
 
     @DeleteMapping ("/{id}")
-    public List<Customer> deleteCustomer (@PathVariable int id) {
+    public ResponseEntity<?> deleteCustomer (@PathVariable int id) {
         for (Customer customer : customers) {
             if (customer.getId() == id) {
                 customers.remove(customer);
-                break;
+
+                // Response 200
+                return ResponseEntity.ok("The customer with ID  " + id + " was removed.");
             }
         }
 
-        return customers;
+        // Response 404
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The customer with ID " + id + " doesn't exist.");
     }
 
 
     @PatchMapping
-    public Customer patchCustomer (@RequestBody Customer customer) {
+    public ResponseEntity<?> patchCustomer (@RequestBody Customer customer) {
         for (Customer client : customers) {
             if (client.getId() == customer.getId()) {
 
@@ -96,11 +103,12 @@ public class CustomerController {
                     client.setPassword(customer.getPassword());
                 }
 
-                return client;
+                // Response 200
+                return ResponseEntity.ok("The customer with ID " + customer.getId() + " was updated.");
             }
         }
 
-        // It should be a exception, not a null
-        return null;
+        // Response 404
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The customer with ID " + customer.getId() + " doesn't exist");
     }
 }
