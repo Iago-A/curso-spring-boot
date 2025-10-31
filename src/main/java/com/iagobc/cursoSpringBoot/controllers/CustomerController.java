@@ -1,7 +1,6 @@
 package com.iagobc.cursoSpringBoot.controllers;
 
 import com.iagobc.cursoSpringBoot.domain.Customer;
-import jakarta.servlet.Servlet;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
