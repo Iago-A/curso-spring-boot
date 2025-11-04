@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ProductsServiceImpl {
+public class ProductsServiceImpl implements ProductService {
     private List<Product> products = new ArrayList<>(Arrays.asList(
             new Product(1, "Portatil",799.99 ,10),
             new Product(2, "Smartphone", 449.99, 25),
@@ -15,6 +15,7 @@ public class ProductsServiceImpl {
     ));
 
 
+    @Override
     public List<Product> getProducts () {
         return products;
     }

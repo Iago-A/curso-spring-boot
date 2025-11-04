@@ -1,6 +1,7 @@
 package com.iagobc.cursoSpringBoot.controllers;
 
 import com.iagobc.cursoSpringBoot.domain.Product;
+import com.iagobc.cursoSpringBoot.service.ProductService;
 import com.iagobc.cursoSpringBoot.service.ProductsServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +14,7 @@ import java.util.List;
 @RequestMapping ("/products")
 public class ProductController {
 
-    ProductsServiceImpl productsService = new ProductsServiceImpl();
-
+    ProductService productsService = new ProductsServiceImpl();
 
     @GetMapping
     public ResponseEntity<?> getProducts () {
