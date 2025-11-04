@@ -1,12 +1,14 @@
 package com.iagobc.cursoSpringBoot.service;
 
 import com.iagobc.cursoSpringBoot.domain.Product;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ProductsServiceImpl implements ProductService {
+@Service
+public class ProductsServiceImpl implements ProductsService {
     private List<Product> products = new ArrayList<>(Arrays.asList(
             new Product(1, "Portatil",799.99 ,10),
             new Product(2, "Smartphone", 449.99, 25),

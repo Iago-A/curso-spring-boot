@@ -4,7 +4,7 @@ import com.iagobc.cursoSpringBoot.domain.Product;
 
 import java.util.List;
 
-public interface ProductService {
+public interface ProductsService {
 
     public List<Product> getProducts ();
 }
