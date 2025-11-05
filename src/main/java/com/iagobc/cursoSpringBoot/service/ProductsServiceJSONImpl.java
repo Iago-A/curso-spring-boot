@@ -10,8 +10,8 @@ import java.io.IOException;
 import java.util.List;
 
 // Classes with @Service are a bean for Spring boot
-@Primary
-@Service
+//@Primary
+@Service ("jsonProducts")
 public class ProductsServiceJSONImpl implements ProductsService {
 
     @Override
