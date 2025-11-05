@@ -17,7 +17,7 @@ public class ProductController {
 //    Class instance
 //    ProductService productsService = new ProductsServiceImpl();
 
-    // Dependency injection
+    // Dependency injection, it will use the bean with the interface provided to the injection
     @Autowired
     private ProductsService productsService;
 

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+// Classes with @Service are a bean for Spring boot
 @Service
 public class ProductsServiceImpl implements ProductsService {
     private List<Product> products = new ArrayList<>(Arrays.asList(
