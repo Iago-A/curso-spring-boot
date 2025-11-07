@@ -4,6 +4,7 @@ import com.iagobc.cursoSpringBoot.domain.Product;
 import com.iagobc.cursoSpringBoot.service.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ public class ProductController {
 
     // Dependency injection, it will use the bean with the interface provided to the injection
     @Autowired
+    @Lazy
 //    @Qualifier("jsonProducts")
     private ProductsService productsService;
 

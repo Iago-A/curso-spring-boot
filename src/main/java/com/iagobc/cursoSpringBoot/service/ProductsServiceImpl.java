@@ -2,12 +2,14 @@ package com.iagobc.cursoSpringBoot.service;
 
 import com.iagobc.cursoSpringBoot.domain.Product;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Lazy
 // Classes with @Service are a bean for Spring boot
 @Service //("listProducts")
 @ConditionalOnProperty (name = "service.products", havingValue = "listProducts")
