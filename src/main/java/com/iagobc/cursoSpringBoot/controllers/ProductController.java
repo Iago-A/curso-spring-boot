@@ -20,7 +20,7 @@ public class ProductController {
 
     // Dependency injection, it will use the bean with the interface provided to the injection
     @Autowired
-    @Qualifier("jsonProducts")
+//    @Qualifier("jsonProducts")
     private ProductsService productsService;
 
     @GetMapping
