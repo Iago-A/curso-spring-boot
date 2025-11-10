@@ -1,5 +1,6 @@
 package com.iagobc.cursoSpringBoot.controllers;
 
+import com.iagobc.cursoSpringBoot.configurations.ExternalizedConfigurations;
 import com.iagobc.cursoSpringBoot.domain.Product;
 import com.iagobc.cursoSpringBoot.service.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,14 @@ public class ProductController {
 //    @Qualifier("jsonProducts")
     private ProductsService productsService;
 
+    @Autowired
+    private ExternalizedConfigurations externalizedConfigurations;
+
     @GetMapping
     public ResponseEntity<?> getProducts () {
+
+        System.out.println(externalizedConfigurations.toString());
+
         List<Product> products = productsService.getProducts();
 
         return ResponseEntity.ok(products);
