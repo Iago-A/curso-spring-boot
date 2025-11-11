@@ -1,0 +1,197 @@
+openapi: 3.0.3
+info:
+  title: Customers and Products API
+  version: 1.0.0
+  description: API to manage customers and products for practice purposes
+servers:
+  - url: /system/api/v1
+    description: Local server
+
+components:
+  schemas:
+    Customer:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        userName:
+          type: string
+        password:
+          type: string
+      required:
+        - id
+        - name
+        - userName
+        - password
+      example:
+        id: 1
+        name: "Laura García"
+        userName: "LauraGF"
+        password: "1234"
+
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        price:
+          type: number
+          format: double
+        stock:
+          type: integer
+      required:
+        - id
+        - name
+        - price
+        - stock
+      example:
+        id: 1
+        name: "Monitor"
+        price: 299.99
+        stock: 5
+
+paths:
+  /customers:
+    get:
+      summary: Get all customers
+      responses:
+        '200':
+          description: List of customers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Customer'
+    post:
+      summary: Create a new customer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        '201':
+          description: Customer created
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "Customer Laura García was created."
+    put:
+      summary: Update a customer completely
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        '200':
+          description: Customer updated
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "The customer with ID 1 was updated."
+        '404':
+          description: Customer not found
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "The customer with ID 12 doesn't exist."
+
+    patch:
+      summary: Update a customer partially
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        '200':
+          description: Customer partially updated
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "The customer with ID 1 was updated."
+        '404':
+          description: Customer not found
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "The customer with ID 12 doesn't exist."
+
+  /customers/{username}:
+    get:
+      summary: Get a customer by his username
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "LauraGF"
+      responses:
+        '200':
+          description: Customer founded
+          content:
+            application/json:
+              schema:
+                $ref:
+                  '#/components/schemas/Customer'
+        '404':
+          description: Customer not found
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "The customer with username LauraGGF doesn't exist."
+
+  /customers/{id}:
+    delete:
+      summary: Delete a customer by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Customer deleted
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "The customer with ID 1 was removed."
+        '404':
+          description: Customer not found
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "The customer with ID 12 doesn't exist."
+
+  /products:
+    get:
+      summary: Get all products
+      responses:
+        '200':
+          description: List of products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
