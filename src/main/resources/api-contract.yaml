@@ -165,8 +165,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref:
-                  '#/components/schemas/Customer'
+                $ref: '#/components/schemas/Customer'
         '404':
           description: Customer not found
           content:
@@ -239,13 +238,11 @@ paths:
 
   /stats:
     get:
-      summary: Get stats about total costumers, total products and average price
+      summary: Get stats about total customers, total products and average price
       responses:
         '200':
           description: Show stats
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Stat'
+                $ref: '#/components/schemas/Stat'
