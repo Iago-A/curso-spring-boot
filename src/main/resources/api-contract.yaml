@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Customers and Products API
-  version: 1.0.0
+  version: 1.1.0
   description: API to manage customers and products for practice purposes
 servers:
   - url: /system/api/v1
@@ -53,6 +53,25 @@ components:
         name: "Monitor"
         price: 299.99
         stock: 5
+
+    Stat:
+      type: object
+      properties:
+        totalCustomers:
+          type: integer
+        totalProducts:
+          type: integer
+        averagePrice:
+          type: number
+          format: double
+      required:
+        - totalCustomers
+        - totalProducts
+        - averagePrice
+      example:
+        totalCustomers: 11
+        totalProducts: 6
+        averagePrice: 357.22
 
 paths:
   /customers:
@@ -106,7 +125,6 @@ paths:
               schema:
                 type: string
               example: "The customer with ID 12 doesn't exist."
-
     patch:
       summary: Update a customer partially
       requestBody:
@@ -147,8 +165,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref:
-                  '#/components/schemas/Customer'
+                $ref: '#/components/schemas/Customer'
         '404':
           description: Customer not found
           content:
@@ -195,3 +212,37 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Product'
+    post:
+      summary: Add a new product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '200':
+          description: Product added
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Product Ratón inalámbrico was created.
+        '409':
+          description: Product with that id or name already exists
+          content:
+            application/json:
+              schema:
+                type: string
+                example: The product with name Monitor already exists.
+
+  /stats:
+    get:
+      summary: Get stats about total customers, total products and average price
+      responses:
+        '200':
+          description: Show stats
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stat'
