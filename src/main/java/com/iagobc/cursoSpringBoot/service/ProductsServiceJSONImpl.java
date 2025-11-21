@@ -34,4 +34,10 @@ public class ProductsServiceJSONImpl implements ProductsService {
     public int newProduct(Product newProduct) {
         throw new UnsupportedOperationException("JSON-based product service is read-only.");
     }
+
+
+    @Override
+    public List<Product> getFilteredProducts (Double minPrice, Double maxPrice) {
+        throw new UnsupportedOperationException("JSON-based product service is read-only.");
+    }
 }

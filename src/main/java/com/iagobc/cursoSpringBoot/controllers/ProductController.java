@@ -63,4 +63,22 @@ public class ProductController {
                 throw new IllegalStateException("Unexpected codeNumber: " + codeNumber);
         }
     }
+
+    @GetMapping ("/filter")
+    public ResponseEntity<?> getFilteredProducts (@RequestParam Double minPrice, @RequestParam Double maxPrice) {
+        try {
+            List<Product> filteredProducts = productsService.getFilteredProducts(minPrice, maxPrice);
+
+            // Response 200
+            if (filteredProducts.isEmpty()) {
+                return  ResponseEntity.status(HttpStatus.OK).body("There aren't products in the price range specified");
+            }
+
+            // Response 200
+            return ResponseEntity.ok(filteredProducts);
+        } catch (IllegalArgumentException e) {
+            // Response 400
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
 }

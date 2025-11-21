@@ -54,4 +54,26 @@ public class ProductsServiceImpl implements ProductsService {
 
         return codeNumber;
     }
+
+    @Override
+    public List<Product> getFilteredProducts (Double minPrice, Double maxPrice) {
+        // Validate if minPrice and maxPrice are correct
+        if (minPrice < 0 || maxPrice < 0) {
+            throw new IllegalArgumentException("Invalid price range");
+        }
+
+        if (minPrice > maxPrice) {
+            throw new IllegalArgumentException("minPrice must be lower than maxPrice");
+        }
+
+        List<Product> filteredProducts = new ArrayList<>();
+
+        for (Product p : products) {
+            if (p.getPrice() >= minPrice && p.getPrice() <= maxPrice) {
+                filteredProducts.add(p);
+            }
+        }
+
+        return filteredProducts;
+    }
 }
