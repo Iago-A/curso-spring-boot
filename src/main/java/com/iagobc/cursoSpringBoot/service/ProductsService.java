@@ -9,4 +9,5 @@ public interface ProductsService {
     List<Product> getProducts ();
     int newProduct(Product newProduct);
     List<Product> getFilteredProducts (Double minPrice, Double maxPrice);
+    boolean updateStock (Integer id, Product product);
 }

@@ -81,4 +81,27 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+
+    @PatchMapping ("/{id}/stock")
+    public ResponseEntity<String> patchProductsStockById (@PathVariable Integer id, @RequestBody Product product) {
+        boolean updated;
+
+        try{
+            updated = productsService.updateStock(id, product);
+
+            // Response 200
+            if (updated) {
+                return  ResponseEntity.status(HttpStatus.OK).body("Stock for product id = " + id + " updated to " +
+                        product.getStock());
+            }
+            // Response 404
+            else {
+                return  ResponseEntity.status(HttpStatus.NOT_FOUND).body("The product with id = " + id +
+                        " wasn't found");
+            }
+        } catch (IllegalArgumentException e) {
+            // Response 400
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
 }

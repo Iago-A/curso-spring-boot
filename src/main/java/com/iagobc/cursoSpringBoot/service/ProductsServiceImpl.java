@@ -55,6 +55,7 @@ public class ProductsServiceImpl implements ProductsService {
         return codeNumber;
     }
 
+
     @Override
     public List<Product> getFilteredProducts (Double minPrice, Double maxPrice) {
         // Validate if minPrice and maxPrice are correct
@@ -75,5 +76,26 @@ public class ProductsServiceImpl implements ProductsService {
         }
 
         return filteredProducts;
+    }
+
+
+    @Override
+    public boolean updateStock (Integer id, Product product) {
+        if (product.getStock() == null) {
+            throw new IllegalArgumentException("New stock is required");
+        }
+
+        if (product.getStock() < 0) {
+            throw new IllegalArgumentException("Stock can't be negative");
+        }
+
+        for (Product p : products) {
+            if (p.getId().equals(id)) {
+                p.setStock(product.getStock());
+                return true;
+            }
+        }
+
+        return false;
     }
 }

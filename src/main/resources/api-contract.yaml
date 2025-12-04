@@ -269,6 +269,49 @@ paths:
                 type: string
                 example: minPrice must exist
 
+  /products/{id}/stock:
+    patch:
+      summary: Update the product's stock
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 3
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                stock:
+                  type: integer
+                  example: 12
+      responses:
+        '200':
+          description: Stock updated correctly
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Stock for product id = 3 updated to 12
+        '400':
+          description: Number stock is null or negative
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Stock can't be negative
+        '404':
+          description: The product doesn't exist
+          content:
+            application/json:
+              schema:
+                type: string
+                example: The product with id = 8 wasn't found
+
   /stats:
     get:
       summary: Get stats about total customers, total products and average price
