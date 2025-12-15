@@ -2,6 +2,7 @@ package com.iagobc.cursoSpringBoot.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.iagobc.cursoSpringBoot.domain.Discount;
 import com.iagobc.cursoSpringBoot.domain.Product;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,11 @@ public class ProductsServiceJSONImpl implements ProductsService {
 
     @Override
     public boolean updateStock (Integer id, Product product) {
+        throw new UnsupportedOperationException("JSON-based product service is read-only.");
+    }
+
+    @Override
+    public Double productWithDiscount (Integer id, Discount discount) {
         throw new UnsupportedOperationException("JSON-based product service is read-only.");
     }
 }

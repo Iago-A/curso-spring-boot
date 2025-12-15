@@ -1,5 +1,6 @@
 package com.iagobc.cursoSpringBoot.service;
 
+import com.iagobc.cursoSpringBoot.domain.Discount;
 import com.iagobc.cursoSpringBoot.domain.Product;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -97,5 +98,27 @@ public class ProductsServiceImpl implements ProductsService {
         }
 
         return false;
+    }
+
+    @Override
+    public Double productWithDiscount (Integer id, Discount discount) {
+        Double newPrice = -1.0;
+
+        if (discount.getPercentage() == null) {
+            throw new IllegalArgumentException("Percentage is required");
+        }
+
+        if (discount.getPercentage() <= 0 || discount.getPercentage() >= 100) {
+            throw new IllegalArgumentException("Percentage must be higher than 0 and lower than 100");
+        }
+
+        for (Product p : products) {
+            if (p.getId().equals(id)) {
+                newPrice = p.getPrice() - (p.getPrice() * (discount.getPercentage()/100.0));
+                break;
+            }
+        }
+
+        return newPrice;
     }
 }

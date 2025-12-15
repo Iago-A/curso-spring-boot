@@ -1,6 +1,7 @@
 package com.iagobc.cursoSpringBoot.controllers;
 
 import com.iagobc.cursoSpringBoot.configurations.ExternalizedConfigurations;
+import com.iagobc.cursoSpringBoot.domain.Discount;
 import com.iagobc.cursoSpringBoot.domain.Product;
 import com.iagobc.cursoSpringBoot.service.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,6 +99,28 @@ public class ProductController {
             else {
                 return  ResponseEntity.status(HttpStatus.NOT_FOUND).body("The product with id = " + id +
                         " wasn't found");
+            }
+        } catch (IllegalArgumentException e) {
+            // Response 400
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    @PatchMapping ("/{id}/discount")
+    public ResponseEntity<String> showProductWithDiscount (@PathVariable Integer id, @RequestBody Discount discount) {
+        Double newPrice;
+
+        try {
+            newPrice = productsService.productWithDiscount(id, discount);
+
+            // Response 200
+            if (newPrice != -1.0) {
+                return ResponseEntity.status(HttpStatus.OK).body("Product id = " + id + " discounted by " +
+                        discount.getPercentage() + "%. New price = " + newPrice);
+            }
+            //Response 404
+            else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The product with id = " + id + " wasn't found");
             }
         } catch (IllegalArgumentException e) {
             // Response 400

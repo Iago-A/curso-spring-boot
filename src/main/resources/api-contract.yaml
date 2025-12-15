@@ -312,6 +312,49 @@ paths:
                 type: string
                 example: The product with id = 8 wasn't found
 
+  /products/{id}/discount:
+    patch:
+      summary: Show the requested discount
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 3
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                percentage:
+                  type: number
+                  example: 15
+      responses:
+        '200':
+          description: Show the discount
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Product id = 3 discounted by 15%. New price = 254.99
+        '400':
+          description: Percentage is null or <= 0 or > 100
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Percentage must be higher than 0 and lower than 100
+        '404':
+          description: The product doesn't exist
+          content:
+            application/json:
+              schema:
+                type: string
+                example: The product with id = 8 wasn't found
+
   /stats:
     get:
       summary: Get stats about total customers, total products and average price
